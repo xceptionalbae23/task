@@ -1,20 +1,31 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.entity.Visitor;
+import com.example.demo.userService.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TaskController {
-    private final OkHttpClient httpClient = new OkHttpClient();
+@RequestMapping("/api")
+public class ApiController {
+    private final UserService userService;
+
+    public ApiController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/hello")
+    public ResponseEntity<Visitor> greetings(@RequestParam(name = "visitor_name") String visitor_name, HttpServletRequest request){
+        return userService.greetings(visitor_name, request);
+    }
+    //private final OkHttpClient httpClient = new OkHttpClient();
 
 
-    @GetMapping("/api/hello")
+    /*@GetMapping("/api/hello")
     public String greetings(@RequestParam(value = "clientsName", defaultValue = "Client") String clientName,
                             HttpServletRequest request) {
         String clientIp = request.getRemoteAddr();
@@ -44,5 +55,5 @@ public class TaskController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 }

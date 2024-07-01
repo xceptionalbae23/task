@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  hng_stage_1_app:
+    image: spring-boot-docker:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - API_KEY= 76c5b43a6c31478dbc142441240407
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
